@@ -78,9 +78,8 @@ function buildCells(grid) {
   return { rows, cols, cells };
 }
 
-function Cell({ cell, onChange, direction, moveCaret, inputRef, activeCell, changeActiveCell, cells }) {
+function Cell({ cell, onChange, direction, toggleDirection, moveCaret, inputRef, activeCell, changeActiveCell, cells }) {
   if (cell.isBlock) return <div className="cell block" />;
-  
   const getWordCells = () => {
     if (!activeCell) return [];
     const word = [];
@@ -117,7 +116,9 @@ function Cell({ cell, onChange, direction, moveCaret, inputRef, activeCell, chan
         className={`cell-input ${isSelectedWord ? "selected" : ""} ${cell.isWrong ? "line-through" : ""}`}
         maxLength={1}
         value={cell.value}
-        onClick={() => changeActiveCell(cell.row, cell.col)}
+        onClick={() => {changeActiveCell(cell.row, cell.col);
+          if (cell.row === activeCell.row && cell.col === activeCell.col) toggleDirection();
+        }}
         onKeyDown={(e) => {
           if (e.key === "ArrowRight") moveCaret(cell.row, cell.col + 1);
           else if (e.key === "ArrowLeft") moveCaret(cell.row, cell.col - 1);
@@ -292,6 +293,7 @@ export default function App() {
                     cell={cell}
                     onChange={handleChange}
                     direction={direction}
+                    toggleDirection={toggleDirection}
                     moveCaret={moveCaret}
                     inputRef={(el) => (inputRefs.current[cell.row][cell.col] = el)}
                     cells={cells}
