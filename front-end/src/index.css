@@ -1,4 +1,5 @@
 :root { font-family: Inter, system-ui, sans-serif; }
+body { width: 100vw }
 .app { padding: 20px; max-width: 1000px; margin: 0 auto; }
 .main { display:flex; gap: 24px; align-items:flex-start; }
 .grid-area { display:flex; flex-direction:column; gap:12px; align-items:flex-start; }
